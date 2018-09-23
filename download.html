@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!-- Use this CSS stylesheet to ensure that add-ons styling 
+     matches the default Google Docs styles -->
+<link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+
+<!-- Load the jQuery library from the Google CDN -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+
+<script>
+   // If the user presses the Enter key in the search box, perform a search
+   $('#name').keyup(function(e) {
+      if (e.keyCode === 13) {
+         $('#export_id').click();
+      }
+   });
+
+   //run exportDoc function from code script
+   $('#export_id').click(function() {
+     google.script.run.withSuccessHandler(download).exportDoc($('#name').val());
+   });
+   
+   //download the csv created
+   function download(obj) {
+    var d = document.createElement('a');
+    d.href = obj.url;
+    d.download = obj.filename;
+    d.click();
+  }
+</script>
+
+<!-- Style modifications -->
+<style>
+.wrapper{background:#efefef;padding:15px;}
+.wrapper input{width:100%;height:30px;}
+.wrapper button{width:100%;height:30px;margin:15px auto 0}
+</style>
+
+
+<!-- The sidebar will have a input box and the search button -->
+<div class="wrapper">
+  <input type="text" id="name" value="myDocExport" />
+  <button class="blue" id="export_id">Export</button>
+</div>
+
